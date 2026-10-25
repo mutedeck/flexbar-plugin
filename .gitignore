@@ -1,0 +1,13 @@
+node_modules/
+logs/
+.flexbar-sim/
+.DS_Store
+*.flexplugin
+# Build output (CI builds it on release)
+com.mutedeck.flexbar.plugin/backend/
+# Holds the MuteDeck token at runtime when the plugin is linked from this folder
+com.mutedeck.flexbar.plugin/config.json
+com.mutedeck.flexbar.plugin/logs/
+# Release staging and packages (npm run release)
+build/
+release/

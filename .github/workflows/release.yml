@@ -1,0 +1,43 @@
+name: Release
+
+# Push a tag like v0.9.0 (it must match package.json "version") to build the plugin
+# and attach the .flexplugin to a GitHub Release. FlexDesigner installs and updates
+# plugins from the latest Release's .flexplugin asset.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build and pack
+        run: npm run release
+
+      - name: Check the committed manifest is up to date
+        run: git diff --exit-code -- com.mutedeck.flexbar.plugin/manifest.json com.mutedeck.flexbar.plugin/ui
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.flexplugin
+          generate_release_notes: true

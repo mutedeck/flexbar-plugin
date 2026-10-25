@@ -1,0 +1,835 @@
+{
+  "name": "MuteDeck",
+  "uuid": "com.mutedeck.flexbar",
+  "version": "0.9.0",
+  "author": "MuteDeck",
+  "entry": "backend/plugin.cjs",
+  "description": "Control Zoom, Teams, Google Meet and more from your Flexbar: mute, video, share, record, leave, reactions and custom actions.",
+  "repo": "https://github.com/mutedeck/flexbar-plugin",
+  "sdk": {
+    "version": "1.0.0"
+  },
+  "software": {
+    "minimumVersion": "1.0.0"
+  },
+  "os": [
+    {
+      "platform": "mac",
+      "minimumVersion": "10.15"
+    },
+    {
+      "platform": "windows",
+      "minimumVersion": "10"
+    }
+  ],
+  "device": [
+    {
+      "name": "flexbar",
+      "version": "1.0.0"
+    }
+  ],
+  "configPage": "config",
+  "keyLibrary": {
+    "title": "$PluginName",
+    "style": {
+      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAGnmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4xLWMwMDAgNzkuZGFiYWNiYiwgMjAyMS8wNC8xNC0wMDozOTo0NCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjAgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDIxLTEyLTA0VDEzOjI1OjI0KzAxOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyMS0xMi0zMVQxMzozMjo1NSswMTowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMS0xMi0zMVQxMzozMjo1NSswMTowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjExZmE5MTItNzNhZS00ZWZiLWJmZjItNWNmYTYzZWRmZmY5IiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZGYzNzJkNDAtYzc0OS01YTQ5LTlkODYtMGM4ZWVjMDBkZGYwIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6M2MyNTg2NWMtYjU2Ny00OGJhLTk0M2ItMzFmYjA4MWVkYzdlIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDozYzI1ODY1Yy1iNTY3LTQ4YmEtOTQzYi0zMWZiMDgxZWRjN2UiIHN0RXZ0OndoZW49IjIwMjEtMTItMDRUMTM6MjU6MjQrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy4wIChNYWNpbnRvc2gpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDplMDBkY2IwNS00NzI5LTQ1ZjEtYjkxOC0xOGZjMmM4MTNmM2QiIHN0RXZ0OndoZW49IjIwMjEtMTItMzFUMTM6MzE6MzMrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy4wIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMTFmYTkxMi03M2FlLTRlZmItYmZmMi01Y2ZhNjNlZGZmZjkiIHN0RXZ0OndoZW49IjIwMjEtMTItMzFUMTM6MzI6NTUrMDE6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy4wIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqghUNUAAATKSURBVGje7dlrjFxlGQfw33nPzN7aQtrSC2wJFWK1XrbQJgoxRQgUEu5GVCQSJQKJ4ZMkXD74waghQNDEEAIEQQyEQIGGGm4NxAty0RpqW6BWsYmt0C1Nt1t62e5lZo4f5t32tMzOTHc/NTnPlznvOe95nuf/3N8zSZZljmcKjnMqABQACgAFgAJAAaAAUACYApWSDavb3TsP52Ex5qCEIWzFWryN+mSYoSvoqZzo/V+vsXC4n+k91I4YHL+Cs/EZ9KCCAWzGn7C9LQBtKn82voVL0IvpSKLQ3ViPVViNHS14zcHl+CaWYRbKEfYB9OMlPIu3UGvGLLH++WbPL8AtuKhNsDvwoMxDusKOozwwWy27CTdHI7SiKv6IX+HlY82BbvwSr0Wrt+up+fgp3iC7oibIsoDsfLyOO9tUHlJcGL3xW8xuN4TmRvctn1xaJaicQXn1cOi8Noykw2phpVArqSWTzdUfYCmuxgfNPFDGyskrL4bsKLXPu75z1ZO9X355lT2nlaiSTOn01xcNO7MZgMfw9akVtlHKn7NkdLMHPrpb6aq1LN7K9lMItalWzb5o4IYAvodrp8Y/I8zSrex3n9ym80DGQXz7GTrG2Ddjql4Q8+LWowF04eftm9gmrMO2I2O/Suh1zdAqS0Y20x3YmTJrH8v/yr4TGnlhW+S1KfJuh26N5fgQgO9jYRsvPhgtsDTW8HPwQ/wzdi/l6qA7hh6v15AkqUvYjb6/MXOQg93jXngX10ceyyLPFXi4DT3m4MY8gKvaqMnfxY/wF4zE+9vxKM5l9AXpyS4YW29R5T91AFmsc/sTZu/n9K31MEorz8dceyzXcUdiqb0J1x3q6hPTFegIWISvttj8EzyVW5+KL+TCZ5csuUFS3rZibF0UnRxKC0mo//b+l8QW1dKNGMzFXh9OyvF/IvaTZnQmloXYbWc22fgv3J1b3xDnnn/E8WEeCWHGx7LRu5ZUNkbdw5HpMYq5/aTZPQ5M3xWffBavxFHkdVyZk/MLbGmiVydWBJzVAunqnDsvjjHaiw58g+SeVCV8qfI/Z4z9e81Jtd0Dkk8XJ1V0VgbM6/+DafuphZ7I66IIcTGei5YdbyjPttDti2E8m5vQx7nr7zRo5pd2ZWNz7xz6jfv33ztwSrZrUJJ8ujkPJXTs/cTVzwyas5PhrtMb9JwUl+bWH7XQrbvURrKUc9fvxMqRUy75oJyN7b2kslZazcpSQZI2KAOB8mhq/khZLVBN++MoftpROzfmrjta6FYJrcbVw9lIdPnTuXU/tVv2JDOG9iYzCMqk5QnHxmoo2aGk7226hwfUkpuxLxdo9+GFCWRP+jyQHtXEromxOb8+5pa2fK2yUUdWQXKwhdBULRm24MN6Rfpw4YvC2PJYSN7HmiayJwRwLCE0ToeTK+n2wNDDptWGCOkevIcFE/DaJAu7dFZZ+hZbF1Ee24ANbRiv4ewSMK3FpjdbzT+7k+n5G7djZ4ONg7jt8MDa2YbtWsnWE2I9bUTDUeCrxzhsbcRlsbaP07vx3jvHyOvP+LH6SNiwF5TwYjwK7s11n57Y4h+Z5MT4d/wsNqaA38fz7WTo0fhBYUH8iDDuwxOwLin+YioAFAAKAAWAAkABoABQADh+6f+bU19tqrwbzgAAAABJRU5ErkJggg=="
+    },
+    "children": [
+      {
+        "title": "$Mute.Title",
+        "tip": "$Mute.Tip",
+        "cid": "com.mutedeck.flexbar.togglemute",
+        "config": {
+          "keyType": "multiState",
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-microphone",
+          "width": 140,
+          "multiStyle": [
+            {
+              "icon": "mdi mdi-microphone",
+              "bgColor": "#2E7D32"
+            },
+            {
+              "icon": "mdi mdi-microphone-off",
+              "bgColor": "#C62828"
+            },
+            {
+              "icon": "mdi mdi-microphone-off",
+              "bgColor": "#424242",
+              "fgColor": "#9E9E9E"
+            }
+          ]
+        },
+        "data": {
+          "action_type": "toggle"
+        }
+      },
+      {
+        "title": "$Video.Title",
+        "tip": "$Video.Tip",
+        "cid": "com.mutedeck.flexbar.togglevideo",
+        "config": {
+          "keyType": "multiState",
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-video-off",
+          "width": 140,
+          "multiStyle": [
+            {
+              "icon": "mdi mdi-video-off",
+              "bgColor": "#C62828"
+            },
+            {
+              "icon": "mdi mdi-video",
+              "bgColor": "#2E7D32"
+            },
+            {
+              "icon": "mdi mdi-video-off",
+              "bgColor": "#424242",
+              "fgColor": "#9E9E9E"
+            }
+          ]
+        },
+        "data": {
+          "action_type": "toggle"
+        }
+      },
+      {
+        "title": "$Share.Title",
+        "tip": "$Share.Tip",
+        "cid": "com.mutedeck.flexbar.togglesharing",
+        "config": {
+          "keyType": "multiState",
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-monitor-share",
+          "width": 140,
+          "multiStyle": [
+            {
+              "icon": "mdi mdi-monitor-share",
+              "bgColor": "#37474F"
+            },
+            {
+              "icon": "mdi mdi-monitor-share",
+              "bgColor": "#1565C0"
+            },
+            {
+              "icon": "mdi mdi-monitor-off",
+              "bgColor": "#424242",
+              "fgColor": "#9E9E9E"
+            }
+          ]
+        },
+        "data": {
+          "action_type": "toggle"
+        }
+      },
+      {
+        "title": "$Record.Title",
+        "tip": "$Record.Tip",
+        "cid": "com.mutedeck.flexbar.togglerecording",
+        "config": {
+          "keyType": "multiState",
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-record-circle-outline",
+          "width": 140,
+          "multiStyle": [
+            {
+              "icon": "mdi mdi-record-circle-outline",
+              "bgColor": "#37474F"
+            },
+            {
+              "icon": "mdi mdi-record-rec",
+              "bgColor": "#C62828"
+            },
+            {
+              "icon": "mdi mdi-record-circle-outline",
+              "bgColor": "#424242",
+              "fgColor": "#9E9E9E"
+            }
+          ]
+        },
+        "data": {
+          "action_type": "toggle"
+        }
+      },
+      {
+        "title": "$Leave.Title",
+        "tip": "$Leave.Tip",
+        "cid": "com.mutedeck.flexbar.leavemeeting",
+        "config": {
+          "keyType": "multiState",
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-phone-hangup",
+          "width": 140,
+          "multiStyle": [
+            {
+              "icon": "mdi mdi-phone-hangup",
+              "bgColor": "#424242",
+              "fgColor": "#9E9E9E"
+            },
+            {
+              "icon": "mdi mdi-phone-hangup",
+              "bgColor": "#C62828"
+            }
+          ]
+        },
+        "data": {}
+      },
+      {
+        "title": "$BringToFront.Title",
+        "tip": "$BringToFront.Tip",
+        "cid": "com.mutedeck.flexbar.bring-to-front",
+        "config": {
+          "keyType": "default",
+          "clickable": true,
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-arrange-bring-to-front",
+          "width": 140,
+          "bgColor": "#37474F"
+        },
+        "data": {}
+      },
+      {
+        "title": "$CustomAction.Title",
+        "tip": "$CustomAction.Tip",
+        "cid": "com.mutedeck.flexbar.custom-action",
+        "config": {
+          "keyType": "default",
+          "clickable": true,
+          "platform": [
+            "windows",
+            "mac"
+          ]
+        },
+        "style": {
+          "icon": "mdi mdi-lightning-bolt",
+          "width": 140,
+          "bgColor": "#37474F"
+        },
+        "data": {
+          "custom_action": ""
+        }
+      },
+      {
+        "title": "Zoom",
+        "cid": "com.eniac.navigation.page",
+        "style": {
+          "icon": "mdi mdi-folder-outline",
+          "width": 240
+        },
+        "data": {
+          "path": "",
+          "win": []
+        },
+        "children": [
+          {
+            "title": "$Preset.raise-hand",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.raise-hand",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-hand-back-right",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "raise-hand",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-clap",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-clap",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-hand-clap",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-clap",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-heart",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-heart",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-heart",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-heart",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-laugh",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-laugh",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-emoticon-lol",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-laugh",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-tada",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-tada",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-party-popper",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-tada",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-thumbs-up",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-thumbs-up",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-thumb-up",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-thumbs-up",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-wow",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.react-wow",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-emoticon-excited",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "react-wow",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.toggle-chat",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.toggle-chat",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-chat",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "toggle-chat",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.toggle-participants",
+            "tip": "Zoom",
+            "cid": "com.mutedeck.flexbar.preset.zoom.toggle-participants",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-account-group",
+              "width": 120,
+              "bgColor": "#0B5CFF"
+            },
+            "data": {
+              "action": "toggle-participants",
+              "direct": false
+            }
+          }
+        ]
+      },
+      {
+        "title": "Microsoft Teams",
+        "cid": "com.eniac.navigation.page",
+        "style": {
+          "icon": "mdi mdi-folder-outline",
+          "width": 240
+        },
+        "data": {
+          "path": "",
+          "win": []
+        },
+        "children": [
+          {
+            "title": "$Preset.raise-hand",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.raise-hand",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-hand-back-right",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "raise-hand",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.react-applause",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.react-applause",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-hand-clap",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "react-applause",
+              "direct": true
+            }
+          },
+          {
+            "title": "$Preset.react-laugh",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.react-laugh",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-emoticon-lol",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "react-laugh",
+              "direct": true
+            }
+          },
+          {
+            "title": "$Preset.react-like",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.react-like",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-thumb-up",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "react-like",
+              "direct": true
+            }
+          },
+          {
+            "title": "$Preset.react-love",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.react-love",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-heart",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "react-love",
+              "direct": true
+            }
+          },
+          {
+            "title": "$Preset.react-wow",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.react-wow",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-emoticon-excited",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "react-wow",
+              "direct": true
+            }
+          },
+          {
+            "title": "$Preset.toggle-chat",
+            "tip": "Microsoft Teams",
+            "cid": "com.mutedeck.flexbar.preset.teams.toggle-chat",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-chat",
+              "width": 120,
+              "bgColor": "#5B5FC7"
+            },
+            "data": {
+              "action": "toggle-chat",
+              "direct": false
+            }
+          }
+        ]
+      },
+      {
+        "title": "Google Meet",
+        "cid": "com.eniac.navigation.page",
+        "style": {
+          "icon": "mdi mdi-folder-outline",
+          "width": 240
+        },
+        "data": {
+          "path": "",
+          "win": []
+        },
+        "children": [
+          {
+            "title": "$Preset.live-caption",
+            "tip": "Google Meet",
+            "cid": "com.mutedeck.flexbar.preset.google-meet.live-caption",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-closed-caption",
+              "width": 120,
+              "bgColor": "#00897B"
+            },
+            "data": {
+              "action": "live-caption",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.raise-hand",
+            "tip": "Google Meet",
+            "cid": "com.mutedeck.flexbar.preset.google-meet.raise-hand",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-hand-back-right",
+              "width": 120,
+              "bgColor": "#00897B"
+            },
+            "data": {
+              "action": "raise-hand",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.toggle-chat",
+            "tip": "Google Meet",
+            "cid": "com.mutedeck.flexbar.preset.google-meet.toggle-chat",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-chat",
+              "width": 120,
+              "bgColor": "#00897B"
+            },
+            "data": {
+              "action": "toggle-chat",
+              "direct": false
+            }
+          },
+          {
+            "title": "$Preset.toggle-participants",
+            "tip": "Google Meet",
+            "cid": "com.mutedeck.flexbar.preset.google-meet.toggle-participants",
+            "config": {
+              "keyType": "default",
+              "clickable": true,
+              "platform": [
+                "windows",
+                "mac"
+              ]
+            },
+            "style": {
+              "icon": "mdi mdi-account-group",
+              "width": 120,
+              "bgColor": "#00897B"
+            },
+            "data": {
+              "action": "toggle-participants",
+              "direct": false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "local": {
+    "en": {
+      "PluginName": "MuteDeck",
+      "Mute": {
+        "Title": "Mute",
+        "Tip": "Mute or unmute your microphone"
+      },
+      "Video": {
+        "Title": "Video",
+        "Tip": "Turn your camera on or off"
+      },
+      "Share": {
+        "Title": "Share",
+        "Tip": "Start or stop screen sharing"
+      },
+      "Record": {
+        "Title": "Record",
+        "Tip": "Start or stop recording"
+      },
+      "Leave": {
+        "Title": "Leave",
+        "Tip": "Leave the meeting"
+      },
+      "BringToFront": {
+        "Title": "Bring to front",
+        "Tip": "Bring the meeting window to the front"
+      },
+      "CustomAction": {
+        "Title": "Custom action",
+        "Tip": "Run one of your MuteDeck custom actions"
+      },
+      "Settings": {
+        "WhenTapped": "When tapped",
+        "Mute": {
+          "Toggle": "Toggle mute",
+          "On": "Always mute",
+          "Off": "Always unmute"
+        },
+        "Video": {
+          "Toggle": "Toggle camera",
+          "On": "Always turn the camera on",
+          "Off": "Always turn the camera off"
+        },
+        "Share": {
+          "Toggle": "Toggle screen sharing",
+          "On": "Always start sharing",
+          "Off": "Always stop sharing"
+        },
+        "Record": {
+          "Toggle": "Toggle recording",
+          "On": "Always start recording",
+          "Off": "Always stop recording"
+        },
+        "CustomAction": {
+          "Label": "Custom action",
+          "Hint": "Pick one of your MuteDeck custom actions, or type its name.",
+          "BuiltIn": "built-in",
+          "Refresh": "Reload list",
+          "NotConnected": "MuteDeck isn't connected, so the list can't load. You can still type the action name.",
+          "NotLicensed": "Custom actions need MuteDeck Pro.",
+          "LoadFailed": "Couldn't load your custom actions from MuteDeck."
+        },
+        "Connection": {
+          "Title": "MuteDeck connection",
+          "Reset": "Reset pairing",
+          "ResetDone": "Pairing reset. Allow Flexbar in MuteDeck again.",
+          "Connected": {
+            "Label": "Connected",
+            "Help": "The Flexbar is connected to MuteDeck."
+          },
+          "ConnectedLegacy": {
+            "Label": "Connected",
+            "Help": "Connected to an older MuteDeck version. Update MuteDeck for the latest features."
+          },
+          "Pending": {
+            "Label": "Waiting for approval",
+            "Help": "Open MuteDeck and allow \"Flexbar\" to control it."
+          },
+          "Denied": {
+            "Label": "Access denied",
+            "Help": "MuteDeck denied this plugin. It will ask again shortly, or use Reset pairing to ask now."
+          },
+          "Connecting": {
+            "Label": "Connecting…",
+            "Help": "Looking for MuteDeck on this computer."
+          },
+          "NotRunning": {
+            "Label": "MuteDeck not running",
+            "Help": "Start MuteDeck on this computer. The Flexbar connects automatically."
+          }
+        }
+      },
+      "Preset": {
+        "live-caption": "Live captions",
+        "raise-hand": "Raise hand",
+        "react-applause": "Applause",
+        "react-clap": "Clap",
+        "react-heart": "Heart",
+        "react-laugh": "Laugh",
+        "react-like": "Like",
+        "react-love": "Love",
+        "react-tada": "Tada",
+        "react-thumbs-up": "Thumbs up",
+        "react-wow": "Wow",
+        "toggle-chat": "Chat",
+        "toggle-participants": "Participants"
+      }
+    }
+  }
+}

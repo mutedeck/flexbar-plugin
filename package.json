@@ -5,6 +5,7 @@
   "description": "MuteDeck plugin for Flexbar (FlexDesigner)",
   "type": "module",
   "scripts": {
+    "postinstall": "node scripts/patch-flexcli.mjs",
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "manifest": "node scripts/generate-manifest.mjs",

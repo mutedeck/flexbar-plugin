@@ -205,8 +205,13 @@ plugin.on("plugin.dead", (payload: { serialNumber: string; keys: KeyData[] }) =>
 	}
 });
 
+/**
+ * The reply goes back to the Flexbar: anything but `{ status: "success" }` shows "Operation failed"
+ * on the device. MuteDeck's answer comes later, so always acknowledge; failures get their own snackbar.
+ */
 plugin.on("plugin.data", (payload: { serialNumber: string; data: { key: KeyData } }) => {
 	handleTap(payload.serialNumber, payload.data.key);
+	return { status: "success" };
 });
 
 /** Messages from the config pages (`$fd.sendToBackend`). */

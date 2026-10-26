@@ -1,7 +1,7 @@
 {
   "name": "MuteDeck",
   "uuid": "com.mutedeck.flexbar",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "author": "MuteDeck",
   "entry": "backend/plugin.cjs",
   "description": "Control Zoom, Teams, Google Meet and more from your Flexbar: mute, video, share, record, leave, reactions and custom actions.",

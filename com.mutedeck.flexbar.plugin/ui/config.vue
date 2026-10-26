@@ -2,8 +2,8 @@
   <v-container>
     <v-card :title="$t('Settings.Connection.Title')" prepend-icon="mdi-connection">
       <v-card-text>
-        <v-chip :color="view.color" variant="flat" :prepend-icon="view.icon">{{ $t(`Settings.Connection.${view.key}.Label`) }}</v-chip>
-        <p class="mt-4 text-body-2">{{ $t(`Settings.Connection.${view.key}.Help`) }}</p>
+        <v-chip :color="view.color" variant="flat" :prepend-icon="view.icon">{{ $t(view.label) }}</v-chip>
+        <p class="mt-4 text-body-2">{{ $t(view.help) }}</p>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -43,8 +43,11 @@ export default {
     };
   },
   computed: {
+    // Message keys are built here, not in the template: FlexDesigner pastes the template into a JS
+    // template string, so a `${...}` in the template runs too early ("view is not defined").
     view() {
-      return VIEWS[this.state] ?? VIEWS.connecting;
+      const view = VIEWS[this.state] ?? VIEWS.connecting;
+      return { ...view, label: `Settings.Connection.${view.key}.Label`, help: `Settings.Connection.${view.key}.Help` };
     },
   },
   mounted() {

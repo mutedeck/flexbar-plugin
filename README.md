@@ -51,7 +51,10 @@ To publish:
 
 FlexDesigner installs and updates plugins from the latest Release's `.flexplugin` asset, through the `repo` link in the manifest. That only works once the repo is public; until then, hand the `.flexplugin` file out directly.
 
-**Gotcha:** an SDK event handler must not return the logger. `(p) => logger.info(p)` returns the winston instance, the SDK can't send it as the reply, and FlexDesigner never gets an answer. Use block bodies.
+**Gotchas:**
+- The `plugin.data` handler must return `{ status: "success" }`. The reply goes to the Flexbar, and anything else (including no return value) shows "Operation failed" on the device after every tap.
+- A settings page's `<template>` must not contain `${` or a backslash. FlexDesigner pastes the template into a JS template string, so `${...}` runs as JS before the component exists (the page shows e.g. "view is not defined"). Build such strings in a computed property; `npm run release` checks for this.
+- An SDK event handler must not return the logger. `(p) => logger.info(p)` returns the winston instance, the SDK can't send it as the reply, and FlexDesigner never gets an answer. Use block bodies.
 
 ## Not done yet
 

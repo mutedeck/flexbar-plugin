@@ -20,6 +20,17 @@ if (tag && tag.replace(/^v/, '') !== version) {
 }
 
 run('node', ['scripts/generate-manifest.mjs'])
+
+// FlexDesigner loads a page by pasting its <template> into a JS template string, escaping only
+// backticks. A `${` or a backslash in the template is then evaluated as JS (e.g. "view is not defined").
+const uiDir = path.join(PLUGIN_DIR, 'ui')
+for (const name of fs.readdirSync(uiDir).filter((file) => file.endsWith('.vue'))) {
+  const template = fs.readFileSync(path.join(uiDir, name), 'utf8').match(/<template>([\s\S]*)<\/template>/)?.[1] ?? ''
+  if (template.includes('${') || template.includes('\\')) {
+    console.error(`ui/${name}: the <template> contains \`\${\` or a backslash, which FlexDesigner breaks. Move that expression into a computed property.`)
+    process.exit(1)
+  }
+}
 fs.rmSync(path.join(PLUGIN_DIR, 'backend'), { recursive: true, force: true })
 run(path.join('node_modules', '.bin', 'rollup'), ['-c'], { env: { ...process.env, ROLLUP_WATCH: '' } })
 
